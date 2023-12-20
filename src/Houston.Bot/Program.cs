@@ -4,6 +4,7 @@ using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Houston.Bot.Services;
+using Houston.Database;
 
 namespace Houston.Bot;
 
@@ -23,6 +24,7 @@ public class Program
 	{
 		return new ServiceCollection()
 			.AddSingleton(new BotService())
+			.AddDbContext<DatabaseContext>()
 			.BuildServiceProvider();
 	}
 }

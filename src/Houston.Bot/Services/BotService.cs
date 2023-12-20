@@ -28,7 +28,7 @@ public class BotService : DiscordShardedClient
 		_client.Log += LogAsync;
 
 		await _client.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("TOKEN"));
-		await _client.SetGameAsync("NHL Games", null, ActivityType.Watching);
+		await _client.SetGameAsync("Glowstudent do stuff", null, ActivityType.Watching);
 
 		await _client.StartAsync();
 
