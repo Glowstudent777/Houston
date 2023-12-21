@@ -1,12 +1,11 @@
-﻿FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+﻿FROM mcr.microsoft.com/dotnet/runtime:7.0 AS base
 WORKDIR /app
 
-FROM mcr.microsoft.com/dotnet/runtime:6.0 AS base
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 
 COPY Houston.Bot/Houston.Bot.csproj Houston.Bot/
 COPY Houston.Database/Houston.Database.csproj Houston.Database/
-# COPY NuGet.config Houston.Bot/
 RUN dotnet restore Houston.Bot/Houston.Bot.csproj
 COPY . .
 WORKDIR /src/Houston.Bot
