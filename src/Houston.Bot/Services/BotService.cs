@@ -1,56 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Discord;
-using Discord.Commands;
+﻿using Discord.Addons.Hosting;
+using Discord.Addons.Hosting.Util;
 using Discord.Interactions;
 using Discord.WebSocket;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic;
+using Discord;
+using System.Reflection;
 
 namespace Houston.Bot.Services;
 
-public class BotService : DiscordShardedClient
+public class BotService : DiscordShardedClientService
 {
-	private DiscordShardedClient _client;
+	private readonly ILogger<BotService> _logger;
 
-	public BotService()
+	public BotService(DiscordShardedClient client, ILogger<BotService> logger) : base(client, logger)
 	{
-		_client = new DiscordShardedClient(new DiscordSocketConfig()
-		{
-			GatewayIntents = GatewayIntents.All,
-		});
+		_logger = logger;
 	}
 
-	public async Task Initialize()
+	protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 	{
-		_client.Log += LogAsync;
+		await Client.WaitForReadyAsync(stoppingToken);
 
-		await _client.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("TOKEN"));
-		await _client.SetGameAsync("Glowstudent do stuff", null, ActivityType.Watching);
+		await Client.SetActivityAsync(new Game("with the universe"));
 
-		await _client.StartAsync();
-
-		_client.ShardReady += OnShardReady;
-	}
-
-	private async Task OnShardReady(DiscordSocketClient client)
-	{
-		if (client.ShardId != 0) return;
-		Console.WriteLine($"Logged in as {client.CurrentUser.Username}({client.CurrentUser.Id})");
-	}
-
-	private static Task LogAsync(LogMessage log)
-	{
-		if (log.Exception is GatewayReconnectException)
-		{
-			if (log.Exception.InnerException is not null)
-				Console.WriteLine(log.Exception.InnerException.Message);
-			return Task.CompletedTask;
-		}
-
-		Console.WriteLine(log.ToString());
-		return Task.CompletedTask;
+		_logger.LogInformation("Services started");
 	}
 }
