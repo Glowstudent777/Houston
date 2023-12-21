@@ -4,7 +4,7 @@ services:
         container_name: 'houston-postgres'
         image: postgres:15
         volumes:
-            - postgresql-data:/var/lib/postgresql/data
+            - 'postgresql-data:/var/lib/postgresql'
         restart: unless-stopped
         environment:
             POSTGRES_USER: 'houston'
@@ -14,8 +14,8 @@ services:
     bot:
         container_name: 'houston-bot'
         build:
-            context: ./src
-            dockerfile: Houston.Bot/Dockerfile
+            context: './src'
+            dockerfile: 'Houston.Bot/Dockerfile'
         depends_on:
             - postgres
         volumes:
@@ -28,3 +28,6 @@ services:
             driver: "local"
             options:
                 max-size: 50M
+
+volumes:
+    postgresql-data:
