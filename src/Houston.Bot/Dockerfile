@@ -1,8 +1,6 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /app
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /app
 COPY Houston.Bot/Houston.Bot.csproj Houston.Bot/
 COPY Houston.Database/Houston.Database.csproj Houston.Database/
 # COPY NuGet.config Houston.Bot/
