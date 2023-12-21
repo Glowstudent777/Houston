@@ -16,3 +16,7 @@ After you have installed and set up Docker run the following command:
 ```sh
 docker compose up -d --build
 ```
+
+## Contributing & Licensing
+
+Contributions are welcome. Please read the full conditions surrounding contributing in the [LICENSE](LICENSE) document before sending in your contributions.
