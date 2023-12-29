@@ -16,7 +16,7 @@ git clone https://github.com/Glowstudent777/Houston.git
 ```sh
 mv .env.example .env
 ```
-3. Add your token to the `.env` file. This can be done using this command: `sudo nano .env`. Paste your token after `TOKEN=`. Lastly save the file using <kbd>Ctrl</kbd>+<kbd>X</kbd> and then <kbd>Enter</kbd>.
+3. Add your token to the `.env` file. This can be done using this command: `sudo nano .env`. Paste your token after `TOKEN=`. Lastly save the file using <kbd>Ctrl</kbd>+<kbd>X</kbd>, then <kbd>Y</kbd> and finally <kbd>Enter</kbd>.
 
 ## Docker
 
