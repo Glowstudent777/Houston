@@ -1,10 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Houston.Database.Entities;
+using Houston.Database.Extensions;
 
 namespace Houston.Database;
 
 public class DatabaseContext : DbContext
 {
+	public DbSet<User> Users { get; internal set; }
+
 	private readonly string _connectionString;
 
 	public DatabaseContext(IConfiguration configuration)
@@ -19,5 +23,7 @@ public class DatabaseContext : DbContext
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
+		modelBuilder.ConfigureGuildEntities();
+		modelBuilder.ConfigureMemberEntities();
 	}
 }

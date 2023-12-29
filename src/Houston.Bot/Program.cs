@@ -36,6 +36,18 @@ internal static class Program
 
 		try
 		{
+			if (args.Contains("--skip-migration"))
+			{
+				Log.Information("Skipping database migration");
+			}
+			else
+			{
+				Log.Information("Migrating database");
+				using var scope = host.Services.CreateScope();
+				var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+				await db.Database.MigrateAsync();
+			}
+
 			Log.Information("Running host");
 			await host.RunAsync();
 		}
