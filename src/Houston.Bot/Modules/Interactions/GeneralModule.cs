@@ -48,7 +48,7 @@ public class GeneralModule : InteractionsBase
 		}
 
 		[SlashCommand("View", "View another members repuation")]
-		public async Task RepViewAsync(IUser? user = null)
+		public async Task RepViewAsync(IUser user = null)
 		{
 			await DeferAsync();
 			if (user == null) user = Context.User as IUser;
@@ -62,7 +62,7 @@ public class GeneralModule : InteractionsBase
 				.WithColor(Color.Blue)
 				.Build();
 
-			await RespondAsync(embeds: new[] { embed });
+			await FollowupAsync(embeds: new[] { embed });
 		}
 	}
 }
