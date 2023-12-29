@@ -22,8 +22,10 @@ services:
             - './bot-logs:/app/logs'
         restart: unless-stopped
         environment:
-            - TOKEN
+            - TOKEN=${TOKEN}
             - DATABASE=Server=postgres;Port=5432;Database=houston;UserId=houston;Password=supersecurepassword;
+        env_file:
+          - .env
         logging:
             driver: "local"
             options:
