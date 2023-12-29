@@ -7,6 +7,7 @@ namespace Houston.Database;
 
 public class DatabaseContext : DbContext
 {
+	public DbSet<ReputationMember> ReputationMembers { get; internal set; }
 	public DbSet<User> Users { get; internal set; }
 
 	private readonly string _connectionString;
