@@ -32,4 +32,10 @@ internal static class ModelBuilderExtensions
 			modelBuilder.Entity(type).Property("MemberId").ValueGeneratedNever();
 		}
 	}
+
+	public static void ConfigureOtherEntities(this ModelBuilder modelBuilder)
+	{
+		modelBuilder.Entity<User>().HasKey(e => e.UserId);
+		modelBuilder.Entity<User>().Property(e => e.UserId).ValueGeneratedNever();
+	}
 }

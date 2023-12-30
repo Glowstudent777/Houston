@@ -14,7 +14,9 @@ public class DatabaseContext : DbContext
 
 	public DatabaseContext(IConfiguration configuration)
 	{
-		_connectionString = Environment.GetEnvironmentVariable("DATABASE");
+		_connectionString = "Server=10.77.1.95;Port=32769;Database=houston;UserId=admin;Password=admin;";
+		//_connectionString = Environment.GetEnvironmentVariable("DATABASE");
+
 	}
 
 	protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -26,5 +28,6 @@ public class DatabaseContext : DbContext
 	{
 		modelBuilder.ConfigureGuildEntities();
 		modelBuilder.ConfigureMemberEntities();
+		modelBuilder.ConfigureOtherEntities();
 	}
 }

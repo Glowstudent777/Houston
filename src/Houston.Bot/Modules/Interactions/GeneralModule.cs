@@ -37,32 +37,4 @@ public class GeneralModule : InteractionsBase
 			x.Content = $"⏱️ Message Latency: {latency}\n🛰️ Websocket Latency: {Context.Client.Latency}";
 		});
 	}
-
-	[Group("reputation", "User Repuations")]
-	public class ReputationGroupModule : InteractionsBase
-	{
-		private readonly DatabaseContext _dbContext;
-		public ReputationGroupModule(DatabaseContext dbContext)
-		{
-			_dbContext = dbContext;
-		}
-
-		[SlashCommand("View", "View another members repuation")]
-		public async Task RepViewAsync(IUser user = null)
-		{
-			await DeferAsync();
-			if (user == null) user = Context.User as IUser;
-
-			var repMember = await _dbContext.ReputationMembers.GetForMemberAsync(Context.Guild.Id, user.Id);
-			var rep = repMember?.Reputation ?? 0;
-
-			var embed = new EmbedBuilder()
-				.WithTitle($"{user.Username}'s Reputation")
-				.WithDescription($"Reputation: {rep}")
-				.WithColor(Color.Blue)
-				.Build();
-
-			await FollowupAsync(embeds: new[] { embed });
-		}
-	}
 }

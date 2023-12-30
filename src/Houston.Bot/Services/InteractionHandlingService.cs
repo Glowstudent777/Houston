@@ -17,6 +17,7 @@ public class InteractionHandlingService : DiscordShardedClientService
 	private readonly InteractionService _interactions;
 	private readonly IHostEnvironment _env;
 	private readonly IConfiguration _config;
+	private readonly ILogger _logger;
 
 	public InteractionHandlingService(DiscordShardedClient client, ILogger<InteractionHandlingService> logger, IServiceProvider services, InteractionService interactions, IHostEnvironment environment, IConfiguration configuration) : base(client, logger)
 	{
@@ -24,6 +25,7 @@ public class InteractionHandlingService : DiscordShardedClientService
 		_interactions = interactions;
 		_env = environment;
 		_config = configuration;
+		_logger = logger;
 	}
 
 	protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -37,7 +39,7 @@ public class InteractionHandlingService : DiscordShardedClientService
 		await _interactions.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
 		await Client.WaitForReadyAsync(stoppingToken);
 
-		await _interactions.RegisterCommandsGloballyAsync(true);
+		await _interactions.AddModulesGloballyAsync(true, _interactions.Modules.ToArray());
 	}
 
 	private Task ComponentCommandExecuted(ComponentCommandInfo arg1, Discord.IInteractionContext arg2, IResult arg3)
@@ -130,6 +132,7 @@ public class InteractionHandlingService : DiscordShardedClientService
 	{
 		if (!arg3.IsSuccess)
 		{
+			_logger.LogError($"Error executing slash command: {arg3.ErrorReason}");
 			switch (arg3.Error)
 			{
 				case InteractionCommandError.UnmetPrecondition:
